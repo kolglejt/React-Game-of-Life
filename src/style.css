@@ -72,5 +72,22 @@ h1 span {
     font-weight: 700;
     font-size: 15px;
 
+}
+
+.menu {
+
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.menu-button {
+
+    border: 1px solid whitesmoke;
+    height: 20px;
+    background: #ee2560;
+    color: #f4f4f4;
+    font-weight: 700;
 
 }

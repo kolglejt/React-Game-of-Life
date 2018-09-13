@@ -56,6 +56,36 @@ class Grid extends React.Component{
 
 class Buttons extends React.Component {
 
+    constructor() {
+        super();
+
+        this.state = {
+            showMenu: false,
+        };
+
+        this.showMenu = this.showMenu.bind(this);
+        this.closeMenu = this.closeMenu.bind(this);
+    }
+
+    showMenu(event) {
+        event.preventDefault();
+
+        this.setState({ showMenu: true }, () => {
+            document.addEventListener('click', this.closeMenu);
+        });
+    }
+
+    closeMenu(event) {
+
+        if (!this.dropdownMenu.contains(event.target)) {
+
+            this.setState({ showMenu: false }, () => {
+                document.removeEventListener('click', this.closeMenu);
+            });
+
+        }
+    }
+
     render() {
         return (
             <div className="center">
@@ -77,6 +107,25 @@ class Buttons extends React.Component {
                     <button className="button" onClick={this.props.seed}>
                         Seed
                     </button>
+                    <button className="button" onClick={this.showMenu}>
+                        Size
+                    </button>
+                {
+                    this.state.showMenu
+                        ? (
+                            <div className="menu"
+                                 ref={(element) => {
+                                this.dropdownMenu = element;
+                            }}>
+                                <button className='menu-button' onClick={this.handleSelect}>20x10 </button>
+                                <button className='menu-button' onClick={this.handleSelect}>50x30 </button>
+                                <button className='menu-button' onClick={this.handleSelect}>70x50 </button>
+                            </div>
+                        )
+                        : (
+                            null
+                        )
+                }
             </div>
         )
     }
@@ -161,6 +210,7 @@ class Main extends React.Component {
         });
     };
 
+
     play = () => {
         let g= this.state.gridFull;
         let g2 = arrayClone(this.state.gridFull);
@@ -216,6 +266,7 @@ class Main extends React.Component {
                     rows ={this.rows}
                     columns = {this.columns}
                     selectBox = {this.selectBox}
+
                 />
                 <h2>GENERATIONS: {this.state.generation}</h2>
 
